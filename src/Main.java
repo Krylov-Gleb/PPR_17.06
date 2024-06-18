@@ -10,6 +10,7 @@ public class Main {
         String currentPatch = new java.io.File(".").getCanonicalPath();
         // Выводим полный путь до корневого католога
         System.out.println("\nОткрываю корневой котолог: " + currentPatch + "\n");
+        System.out.print("\n");
 
         // Получаем файл с таким названием
         File dir = new File(currentPatch);

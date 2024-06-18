@@ -1,10 +1,3 @@
-/* G
-fbmb\
-bfldfb
-bldfb
-fbdfklb
- */
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -82,7 +75,6 @@ public class Analysis_of_Java_projects {
                                 Count_Str_JavaCode++;
                             }
 
-
                         }
 
                     } catch (FileNotFoundException e) {
@@ -91,6 +83,7 @@ public class Analysis_of_Java_projects {
 
                     System.out.println("Количество Java кода в файле: " + file + " = " + Count_Str_JavaCode + "\n");
                     System.out.println("Количество коминтариев в Java коде: " + file + " = " + Count_Str_Comment_JavaCode + "\n");
+                    System.out.println("\n");
 
                     Count_Str_Comment_JavaCode = 0;
                     Count_Str_JavaCode = 0;
@@ -162,13 +155,9 @@ public class Analysis_of_Java_projects {
                             throw new RuntimeException(e);
                         }
                     }
-
                 }
-
             }
-
         }
-
     }
 
     public void Check_Resources_File(File[] files){
@@ -193,7 +182,7 @@ public class Analysis_of_Java_projects {
                     File[] Content_Directory = Directory.listFiles();
 
                     for(File file_res : Content_Directory){
-                        System.out.println("Был найден файл ресурсов: " + file + "\n");
+                        System.out.println("Был найден файл ресурсов: " + file_res + "\n");
                         Count_Project_File_Resources++;
                     }
 
