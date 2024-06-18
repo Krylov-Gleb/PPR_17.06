@@ -1,6 +1,15 @@
+/* G
+fbmb\
+bfldfb
+bldfb
+fbdfklb
+ */
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Analysis_of_Java_projects {
 
@@ -10,6 +19,10 @@ public class Analysis_of_Java_projects {
     private int Count_Project_File_Resources = 0;
     // Счётчик количества классов
     private int Count_Project_Class = 0;
+    // Счётчик количества кода в джава файле
+    private int Count_Str_JavaCode = 0;
+    // Счётчик количества коментариев в Java коде
+    private int Count_Str_Comment_JavaCode = 0;
     // Добавляю уневерсальный разделитель
     String separator = File.separator;
 
@@ -55,6 +68,32 @@ public class Analysis_of_Java_projects {
                     System.out.println("Найден джава файл: " + file + "\n");
                     // Увеличиваю счётчик на 1
                     Count_Project_File_Java++;
+
+                    try {
+                        Scanner scanner = new Scanner(file);
+
+                        while(scanner.hasNextLine()){
+
+                            String Java_Str = scanner.nextLine();
+                            if(Java_Str.contains("//")){
+                                Count_Str_Comment_JavaCode++;
+                            }
+                            else{
+                                Count_Str_JavaCode++;
+                            }
+
+
+                        }
+
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    System.out.println("Количество Java кода в файле: " + file + " = " + Count_Str_JavaCode + "\n");
+                    System.out.println("Количество коминтариев в Java коде: " + file + " = " + Count_Str_Comment_JavaCode + "\n");
+
+                    Count_Str_Comment_JavaCode = 0;
+                    Count_Str_JavaCode = 0;
 
                     // Создаю файл
                     File fileCache = new File("resources" + separator + "Count_Java_File.txt");
