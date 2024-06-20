@@ -4,18 +4,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Analysis_of_Java_projects {
+public class analysisOfJavaProjects {
 
     // Счётчик Java файлов
-    private int Count_Project_File_Java = 0;
+    private static int Count_Project_File_Java = 0;
+
     // Счётчик файлов ресурсов
-    private int Count_Project_File_Resources = 0;
+    private static int Count_Project_File_Resources = 0;
+
     // Счётчик количества классов
-    private int Count_Project_Class = 0;
+    private static int Count_Project_Class = 0;
+
     // Счётчик количества кода в джава файле
-    private int Count_Str_JavaCode = 0;
+    private static int Count_Str_JavaCode = 0;
+
     // Счётчик количества коментариев в Java коде
-    private int Count_Str_Comment_JavaCode = 0;
+    private static int Count_Str_Comment_JavaCode = 0;
+
     // Добавляю уневерсальный разделитель
     String separator = File.separator;
 
@@ -88,22 +93,6 @@ public class Analysis_of_Java_projects {
                     Count_Str_Comment_JavaCode = 0;
                     Count_Str_JavaCode = 0;
 
-                    // Создаю файл
-                    File fileCache = new File("resources" + separator + "Count_Java_File.txt");
-
-                    // Если значение счётчика > 0 то реализую условие
-                    if(Count_Project_File_Java > 0) {
-                        // Обработка исключения
-                        try {
-                            FileWriter fileWriter = new FileWriter(fileCache);
-                            // Произвожу запись
-                            fileWriter.write(String.valueOf(Count_Project_File_Java));
-                            // Закрываю FileWriter
-                            fileWriter.close();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
                 }
 
             }
@@ -139,22 +128,6 @@ public class Analysis_of_Java_projects {
                     // Увеличиваю счётчик на 1
                     Count_Project_Class++;
 
-                    // Создаю файл
-                    File fileCache = new File("resources" + separator + "Count_Class_File.txt");
-
-                    // Если значение счётчика > 0 то реализую условие
-                    if (Count_Project_File_Java > 0) {
-                        // Обработка исключения
-                        try {
-                            FileWriter fileWriter = new FileWriter(fileCache);
-                            // Произвожу запись
-                            fileWriter.write(String.valueOf(Count_Project_Class));
-                            // Закрываю FileWriter
-                            fileWriter.close();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
                 }
             }
         }
@@ -162,42 +135,23 @@ public class Analysis_of_Java_projects {
 
     public void Check_Resources_File(File[] files){
 
-        String currentPatch = "";
+        for(File file : files){
 
-        // Получаём полный путь до нашего корнегово котолога
-        try {
-            currentPatch = new File(".").getCanonicalPath();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            File Directory = new File(String.valueOf(file));
+            File[] file_resources = Directory.listFiles();
 
-        for (File file : files) {
+            if(file.isDirectory()){
 
-            if (file.isDirectory()) {
+                if(String.valueOf(file).contains("resources")){
 
-                if(String.valueOf(file).equals(currentPatch + separator + "resources")){
-
-                    // Беру директорию (папку) и разделяю её на список файлов.
-                    File Directory = new File(String.valueOf(file));
-                    File[] Content_Directory = Directory.listFiles();
-
-                    for(File file_res : Content_Directory){
-                        System.out.println("Был найден файл ресурсов: " + file_res + "\n");
+                    for (File file1 : file_resources){
+                        System.out.println("Найден файл ресурсов: " + file1 + "\n");
                         Count_Project_File_Resources++;
                     }
 
-                    File file_Cache = new File("resources" + separator + "Count_Resources_File.txt");
-
-                    try {
-                        FileWriter fileWriter = new FileWriter(file_Cache);
-                        fileWriter.write(String.valueOf(Count_Project_File_Resources));
-                        fileWriter.close();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-
-
                 }
+
+                Check_Resources_File(file_resources);
 
             }
 
