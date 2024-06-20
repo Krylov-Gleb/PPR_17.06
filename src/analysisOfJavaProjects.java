@@ -1,40 +1,69 @@
+/*
+Hint on how to use class analysisOfJavaProjects
+
+// We get full access to our Kornegovsky catologist
+String currentPatch = new java.io.File(".").getCanonicalPath();
+
+// Print the full path to the root cataloger
+System.out.println("\nОткрываю корневой котолог: " + currentPatch + "\n");
+System.out.print("\n");
+
+// We receive a file with this name
+File dir = new File(currentPatch);
+
+// Creating an array of files, directories, and folders
+File[] List = dir.listFiles();
+
+// Creating a class
+analysisOfJavaProjects analysisOfJavaProjects = new analysisOfJavaProjects();
+
+// Using the Check_Count_Java_Files method
+analysisOfJavaProjects.Check_Count_Java_Files(List);
+
+// Using the Check_Files_Class method
+analysisOfJavaProjects.Check_Files_Class(List);
+
+// Using the Check_Resources_File method
+analysisOfJavaProjects.Check_Resources_File(List);
+
+*/
+
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class analysisOfJavaProjects {
 
-    // Счётчик Java файлов
+    // Count Java files
     private static int Count_Project_File_Java = 0;
 
-    // Счётчик файлов ресурсов
+    // Count resources file;
     private static int Count_Project_File_Resources = 0;
 
-    // Счётчик количества классов
+    // Count class
     private static int Count_Project_Class = 0;
 
-    // Счётчик количества кода в джава файле
+    // Count Java code
     private static int Count_Str_JavaCode = 0;
 
-    // Счётчик количества коментариев в Java коде
+    // Count Comment
     private static int Count_Str_Comment_JavaCode = 0;
 
-    // Добавляю уневерсальный разделитель
+    // Add separator (/) or (\)
     String separator = File.separator;
 
-    // Гетер для пулучения значения Count_Project_File_Java
+    // Getter - return count java files
     public int getCount_Project_File_Java(){
         return Count_Project_File_Java;
     }
 
-    // Гетер для получения значения Count_Project_File_Resources
+    // Getter - return count resources file
     public int getCount_Project_File_Resources() {
         return Count_Project_File_Resources;
     }
 
-    // Гетер для получения значения Count_Project_Class
+    // Getter - return count class
     public int getCount_Project_Class(){
         return Count_Project_Class;
     }
@@ -45,26 +74,26 @@ public class analysisOfJavaProjects {
 
             if(file.isDirectory()){
 
-                // Беру директорию (папку) и разделяю её на список файлов.
+                // I take a directory (folder) and divide it into a list of files.
                 File Directory = new File(String.valueOf(file));
                 File[] Content_Directory = Directory.listFiles();
 
-                // Проверка что директория не пустая
+                // Checking that the directory is not empty
                 assert Content_Directory != null;
-                // Использую рекурсию
+                // I use recursion
                 Check_Count_Java_Files(Content_Directory);
 
             }
             else{
 
-                // Разделяю строку file по точке что бы найдти расширение
+                // I divide the file line by a point to find the extension
                 String[] Split = String.valueOf(file).split("\\.");
 
-                // Если расширение .java то выполняю условие
+                // If the extension .java is fulfilling the condition
                 if(Split[Split.length-1].equals("java")){
-                    // Сообщение пользователю
+                    // Message to the user
                     System.out.println("Найден джава файл: " + file + "\n");
-                    // Увеличиваю счётчик на 1
+                    // I'm increasing the counter by 1
                     Count_Project_File_Java++;
 
                     try {
@@ -107,25 +136,18 @@ public class analysisOfJavaProjects {
 
             if (file.isDirectory()) {
 
-                // Беру директорию (папку) и разделяю её на список файлов.
                 File Directory = new File(String.valueOf(file));
                 File[] Content_Directory = Directory.listFiles();
 
-                // Проверка что директория не пустая
                 assert Content_Directory != null;
-                // Использую рекурсию
                 Check_Files_Class(Content_Directory);
 
             } else {
 
-                // Разделяю строку file по точке что бы найдти расширение
                 String[] Split = String.valueOf(file).split("\\.");
 
-                // Если расширение .java то выполняю условие
                 if (Split[Split.length - 1].equals("class")) {
-                    // Сообщение пользователю
                     System.out.println("Найден файл класс: " + file + "\n");
-                    // Увеличиваю счётчик на 1
                     Count_Project_Class++;
 
                 }
