@@ -1,37 +1,8 @@
-/*
-Hint on how to use class analysisOfJavaProjects
-
-// We get full access to our Kornegovsky catologist
-String currentPatch = new java.io.File(".").getCanonicalPath();
-
-// Print the full path to the root cataloger
-System.out.println("\nОткрываю корневой котолог: " + currentPatch + "\n");
-System.out.print("\n");
-
-// We receive a file with this name
-File dir = new File(currentPatch);
-
-// Creating an array of files, directories, and folders
-File[] List = dir.listFiles();
-
-// Creating a class
-analysisOfJavaProjects analysisOfJavaProjects = new analysisOfJavaProjects();
-
-// Using the Check_Count_Java_Files method
-analysisOfJavaProjects.Check_Count_Java_Files(List);
-
-// Using the Check_Files_Class method
-analysisOfJavaProjects.Check_Files_Class(List);
-
-// Using the Check_Resources_File method
-analysisOfJavaProjects.Check_Resources_File(List);
-
-*/
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class analysisOfJavaProjects {
 
@@ -49,6 +20,9 @@ public class analysisOfJavaProjects {
 
     // Count Comment
     private static int Count_Str_Comment_JavaCode = 0;
+
+    // Count Multiline comments
+    private static int Count_Multiline_Comments = 0;
 
     // Add separator (/) or (\)
     String separator = File.separator;
@@ -68,7 +42,7 @@ public class analysisOfJavaProjects {
         return Count_Project_Class;
     }
 
-    public void Check_Count_Java_Files(File[] files){
+    public void Check_Count_Java_Files(File[] files) throws FileNotFoundException {
 
         for(File file : files){
 
@@ -92,35 +66,53 @@ public class analysisOfJavaProjects {
                 // If the extension .java is fulfilling the condition
                 if(Split[Split.length-1].equals("java")){
                     // Message to the user
-                    System.out.println("Найден джава файл: " + file + "\n");
+                    System.out.println("Java file found: " + file + "\n");
                     // I'm increasing the counter by 1
                     Count_Project_File_Java++;
 
                     try {
-                        Scanner scanner = new Scanner(file);
+                        String Text = "";
+                        Scanner scanner1 = new Scanner(file);
 
-                        while(scanner.hasNextLine()){
+                        while(scanner1.hasNextLine()){
+                            Text = Text + scanner1.nextLine() + "\n";
+                        }
 
-                            String Java_Str = scanner.nextLine();
+                        String Reg = "\\/\\*[A-zА-я0-9\\W][^\\n]+";
+                        Pattern pattern = Pattern.compile(Reg);
+
+                        Matcher matcher = pattern.matcher(Text);
+
+                        while(matcher.find()){
+                            Count_Multiline_Comments++;
+                        }
+
+                        Scanner scanner2 = new Scanner(file);
+
+                        while(scanner2.hasNextLine()){
+
+                            String Java_Str = scanner2.nextLine();
                             if(Java_Str.contains("//")){
                                 Count_Str_Comment_JavaCode++;
                             }
-                            else{
-                                Count_Str_JavaCode++;
-                            }
+
+                            Count_Str_JavaCode++;
 
                         }
 
                     } catch (FileNotFoundException e) {
-                        throw new RuntimeException(e);
+                        System.out.println("There is no such file, or it cannot be found!\n");
+                        throw new FileNotFoundException();
                     }
 
-                    System.out.println("Количество Java кода в файле: " + file + " = " + Count_Str_JavaCode + "\n");
-                    System.out.println("Количество коминтариев в Java коде: " + file + " = " + Count_Str_Comment_JavaCode + "\n");
+                    System.out.println("The amount of Java code in the file: " + file + " = " + Count_Str_JavaCode + "\n");
+                    System.out.println("The number of comments in the Java code: " + file + " = " + Count_Str_Comment_JavaCode + "\n");
+                    System.out.println("The number of multiline comments: " + file + " = " + Count_Multiline_Comments + "\n");
                     System.out.println("\n");
 
                     Count_Str_Comment_JavaCode = 0;
                     Count_Str_JavaCode = 0;
+                    Count_Multiline_Comments = 0;
 
                 }
 
@@ -147,7 +139,7 @@ public class analysisOfJavaProjects {
                 String[] Split = String.valueOf(file).split("\\.");
 
                 if (Split[Split.length - 1].equals("class")) {
-                    System.out.println("Найден файл класс: " + file + "\n");
+                    System.out.println("The class file was found: " + file + "\n");
                     Count_Project_Class++;
 
                 }
@@ -166,13 +158,15 @@ public class analysisOfJavaProjects {
 
                 if(String.valueOf(file).contains("resources")){
 
+                    assert file_resources != null;
                     for (File file1 : file_resources){
-                        System.out.println("Найден файл ресурсов: " + file1 + "\n");
+                        System.out.println("\nResource file found: " + file1 + "\n");
                         Count_Project_File_Resources++;
                     }
 
                 }
 
+                assert file_resources != null;
                 Check_Resources_File(file_resources);
 
             }
