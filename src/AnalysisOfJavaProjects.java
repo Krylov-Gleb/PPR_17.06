@@ -24,17 +24,14 @@ public class AnalysisOfJavaProjects {
     // Count Multiline comments
     private static int countMultilineComments = 0;
 
-//    // Count Method Public
-//    private static int Count_Method_Public = 0;
-//
-//    // Count Method Private
-//    private static int Count_Method_Private = 0;
-//
-//    // Count Method Protected
-//    private static int Count_Method_Protected = 0;
-//
-//    // Count Method Default
-//    private static int Count_Default_Method = 0;
+    // Count Method Public
+    private static int countMethodPublic = 0;
+
+    // Count Method Private
+    private static int countMethodPrivate = 0;
+
+    // Count Method Protected
+    private static int countMethodProtected = 0;
 
     // Add separator (/) or (\)
     String separator = File.separator;
@@ -114,44 +111,35 @@ public class AnalysisOfJavaProjects {
                             countMultilineComments++;
                         }
 
-//                        String RegMethod = "(|final )(|public |private |protected )(|static)(void| void|\\w+) \\w+\\((\\w+(\\[\\]|) \\w+|)\\)";
-//                        Pattern patternMethod = Pattern.compile(RegMethod);
-//
-//                        Matcher matcherMethod = patternMethod.matcher(Text);
-//
-//                        while(matcherMethod.find()){
-//
-//                            System.out.println(matcherMethod.group());
-//
-//                           String MethodStr = matcherMethod.group();
-//                           String RegMD = "(public|private|protected)";
-//
-//                           Pattern patternMD = Pattern.compile(RegMD);
-//                           Matcher matcherMD = patternMD.matcher(MethodStr);
-//
-//                           while(matcherMD.find()){
-//
-//                               if(matcherMD.group().equals("public")){
-//                                   System.out.println(matcherMD.group());
-//                                   Count_Method_Public++;
-//                                   break;
-//                               }
-//                               if(matcherMD.group().equals("private")){
-//                                   System.out.println(matcherMD.group());
-//                                   Count_Method_Private++;
-//                                   break;
-//                               }
-//                               if (matcherMD.group().equals("protected")){
-//                                   System.out.println(matcherMD.group());
-//                                   Count_Method_Protected++;
-//                                   break;
-//                               }
-//                               else{
-//                                   System.out.println(matcherMD.group());
-//                                   Count_Method_Private++;
-//                               }
-//                           }
-//                        }
+                        String RegMethod = "(public|private|protected)[A-z0-9 ,]+\\(([A-z0-9 ,]+|)\\)";
+                        Pattern patternMethod = Pattern.compile(RegMethod);
+
+                        Matcher matcherMethod = patternMethod.matcher(Text);
+
+                        while(matcherMethod.find()){
+
+                           String MethodStr = matcherMethod.group();
+                           String RegMD = "(public|private|protected)";
+
+                           Pattern patternMD = Pattern.compile(RegMD);
+                           Matcher matcherMD = patternMD.matcher(MethodStr);
+
+                           while(matcherMD.find()){
+
+                               if(matcherMD.group().equals("public")){
+                                   countMethodPublic++;
+                                   break;
+                               }
+                               if(matcherMD.group().equals("private")){
+                                   countMethodPrivate++;
+                                   break;
+                               }
+                               if (matcherMD.group().equals("protected")){
+                                   countMethodProtected++;
+                                   break;
+                               }
+                           }
+                        }
 
                         Scanner scanner2 = new Scanner(file);
 
@@ -174,19 +162,18 @@ public class AnalysisOfJavaProjects {
                     System.out.println("The amount of Java code in the file: " + file + " = " + countStrJavaCode + "\n");
                     System.out.println("The number of comments in the Java code: " + file + " = " + countStrCommentJavaCode + "\n");
                     System.out.println("The number of multiline comments: " + file + " = " + countMultilineComments + "\n");
-//                    System.out.println("Number of public methods: " + file + " = " + Count_Method_Public + "\n");
-//                    System.out.println("Number of private methods: " + file + " = " + Count_Method_Private + "\n");
-//                    System.out.println("Number of protected methods: " + file + " = " + Count_Method_Protected + "\n");
-//                    System.out.println("Number of default methods: " + file + " = " + Count_Default_Method + "\n");
+                    System.out.println("Number of public methods: " + file + " = " + countMethodPublic + "\n");
+                    System.out.println("Number of private methods: " + file + " = " + countMethodPrivate + "\n");
+                    System.out.println("Number of protected methods: " + file + " = " + countMethodProtected + "\n");
+
                     System.out.println("\n");
 
                     countStrCommentJavaCode = 0;
                     countStrJavaCode = 0;
                     countMultilineComments = 0;
-//                    Count_Method_Public = 0;
-//                    Count_Method_Private = 0;
-//                    Count_Method_Protected = 0;
-//                    Count_Default_Method = 0;
+                    countMethodPublic = 0;
+                    countMethodPrivate = 0;
+                    countMethodProtected = 0;
 
                 }
 
