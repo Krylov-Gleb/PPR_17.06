@@ -1,21 +1,27 @@
 package Tests;
 
+/*n jkfsnjsnvjsnvs
+klnvsdjvdnsvjnsd
+kvknsjdvndsjvns
+dnjvsndvnsdvkds
+dnvsjdvndsjvsdjvsd
+ */
+
 public class Test2 {
 
-    // This is a Java file with no actual code, just comments
+    // Test Method 3:
+    private String Name(){
+        return "Name";
+    }
 
-    //This is a multi-line comment
-   //that spans multiple lines
+    // Test Method 2:
+    final protected int Count(int[] Array){
+        return 0;
+    }
 
-// This is a single-line comment
-//This is a Javadoc comment
-//that can be used to generate documentation
-
-// This comment is unnecessary, but it's here anyway
-// This comment is just a placeholder
-// for some code that might be written later
-
-// This comment is a reminder to do something
-// but it's not clear what that something is
+    // Test Method 1:
+    final public static void VSLVSD(){
+        System.out.println("Hello");
+    }
 
 }
