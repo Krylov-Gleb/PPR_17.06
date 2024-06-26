@@ -10,7 +10,7 @@ public class Main {
         String currentPatch = scanner.nextLine();
 
         // Output the full path to the root cat
-        System.out.println("\nI'm opening the root catlog: " + currentPatch + "\n");
+        System.out.println("\nI'M OPENING THE ROOT CAT: " + currentPatch + "\n");
         System.out.print("\n");
 
         // We get a file with this name
@@ -20,12 +20,20 @@ public class Main {
 
         AnalysisOfJavaProjects analysisOfJavaProjects = new AnalysisOfJavaProjects();
 
+        System.out.println("I'M STARTING TO SEARCH FOR JAVA FILES: " + "\n");
+
         try {
             analysisOfJavaProjects.checkCountJavaFiles(List);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        System.out.println("I'M STARTING TO LOOK FOR CLASS FILES: " + "\n");
+
         analysisOfJavaProjects.Check_Files_Class(List);
+
+        System.out.println("I'M STARTING TO SEARCH FOR RESOURCE FILES: " + "\n");
+
         analysisOfJavaProjects.Check_Resources_File(List);
 
         System.out.println("\nSearch results:" + "\n");
